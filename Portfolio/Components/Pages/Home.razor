@@ -82,29 +82,7 @@
 
     <!-- Skills -->
     <section class="mt-12">
-      <div class="flex items-end justify-between gap-4">
-        <div>
-          <h2 class="text-2xl font-bold tracking-tight text-white">Core Skills</h2>
-          <p class="mt-2 text-slate-400">A snapshot of the areas I work in most often.</p>
-        </div>
-      </div>
-
-      <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        @foreach (var group in SkillGroups)
-        {
-          <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
-            <h3 class="text-lg font-semibold text-white">@group.Title</h3>
-            <div class="mt-4 flex flex-wrap gap-2">
-              @foreach (var skill in group.Skills)
-              {
-                <span class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-300">
-                  @skill
-                </span>
-              }
-            </div>
-          </div>
-        }
-      </div>
+      <SkillsMarquee Skills="SkillList" />
     </section>
 
     <!-- Featured Projects -->
@@ -171,12 +149,25 @@
         new("Realtime Systems", "WebSockets / SSE", "Delivered live status and interaction experiences."),
     ];
 
-  private readonly List<SkillGroup> SkillGroups =
+  private readonly List<string> SkillList =
   [
-      new("Languages", ["C#", "Python", "TypeScript", "SQL", "PowerShell", "Bash"]),
-        new("Web & APIs", ["Blazor", ".NET", "Next.js", "React", "Node.js", "REST", "SSE", "WebSockets"]),
-        new("Data & Infra", ["SQL Server", "Oracle", "SQLite", "IIS", "Docker", "GitHub", "Git"]),
-    ];
+      "C#",
+      ".NET",
+      "Blazor",
+      "Python",
+      "SQL",
+      "PowerShell",
+      "Bash",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "SQL Server",
+      "Oracle",
+      "SQLite",
+      "Docker",
+      "IIS"
+  ];
 
   private readonly List<FeaturedProject> FeaturedProjects =
   [
