@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<PageTitle>Julio Gonzalez Garcia | Portfolio</PageTitle>
+<PageTitle>Home</PageTitle>
 
 <div class="min-h-screen bg-slate-950 text-slate-100">
   <div class="mx-auto max-w-7xl px-6 py-10 lg:px-8">
@@ -12,9 +12,9 @@
             Full-Stack Systems & Data Engineer
           </p>
 
-          <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl outline-none focus:outline-none">
             Hi, I’m Julio Gonzalez Garcia.
-          </h1>
+        </h1>
 
           <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
             I build reliable web applications, automation tools, and data-driven systems
@@ -138,19 +138,18 @@
 @code {
   private readonly List<ProfileItem> ProfileStats =
   [
-      new("Location", "Santa Maria, CA"),
-        new("Focus", "Full-Stack + Data Systems"),
-        new("Primary Stack", "C#, .NET, SQL, Python"),
-        new("Portfolio Style", "Technical / Dashboard"),
-    ];
+    new("Focus", "Full-Stack + Data Systems"),
+    new("Primary Stack", "C#, .NET, SQL, Python"),
+    new("Portfolio Style", "Technical / Dashboard"),
+  ];
 
   private readonly List<ImpactStat> ImpactStats =
   [
-        new("Realtime Systems", "WebSockets / SSE", "Delivered live status and interaction experiences."),
-    ];
+    new("Realtime Systems", "WebSockets / SSE", "Delivered live status and interaction experiences."),
+  ];
 
   private readonly List<string> SkillList =
-  [
+    [
       "C#",
       ".NET",
       "Blazor",
@@ -171,20 +170,20 @@
 
   private readonly List<FeaturedProject> FeaturedProjects =
   [
-      new(
-            "Real-Time System Status Dashboard",
-            "Next.js / SSE / SQL Server",
-            "A live monitoring dashboard that pushes status updates to connected clients without refreshes.",
-            "Active",
-            ["Realtime", "Monitoring", "Internal Tool", "Automation"]
-        ),
-        new(
-            "Full-Stack ID Card Creation System",
-            "Python / CustomTkinter / SQLite / REST API",
-            "A standalone desktop app with drag-and-drop layout tools, barcode generation, and template syncing.",
-            "Completed",
-            ["Desktop App", "API", "SQLite", "Packaging"]
-        )
+    new(
+        "Real-Time System Status Dashboard",
+        "Next.js / SSE / SQL Server",
+        "A live monitoring dashboard that pushes status updates to connected clients without refreshes.",
+        "Active",
+        ["Realtime", "Monitoring", "Internal Tool", "Automation"]
+    ),
+    new(
+        "Full-Stack ID Card Creation System",
+        "Python / CustomTkinter / SQLite / REST API",
+        "A standalone desktop app with drag-and-drop layout tools, barcode generation, and template syncing.",
+        "Completed",
+        ["Desktop App", "API", "SQLite", "Packaging"]
+    )
   ];
 
   private record ProfileItem(string Label, string Value);
