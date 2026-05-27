@@ -1,8 +1,23 @@
 ﻿@page "/"
 
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
 <PageTitle>Home</PageTitle>
 
 <div class="min-h-screen bg-slate-950 text-slate-100">
+  <!-- Top nav -->
+  <div class="mx-auto max-w-7xl px-6 pt-6 lg:px-8">
+    <div class="flex justify-start">
+      <ol class="flex flex-wrap gap-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+        <li><a href="#skills" class="transition hover:text-cyan-300">Skills</a></li>
+        <li><a href="#about" class="transition hover:text-cyan-300">About</a></li>
+        <li><a href="#projects" class="transition hover:text-cyan-300">Projects</a></li>
+        <li><a href="#resume" class="transition hover:text-cyan-300">Resume</a></li>
+        <li><a href="#contact" class="transition hover:text-cyan-300">Contact</a></li>
+      </ol>
+    </div>
+  </div>
   <div class="mx-auto max-w-7xl px-6 py-10 lg:px-8">
     <!-- Hero -->
     <section class="rounded-3xl border border-slate-800 bg-slate-900/60 p-8 shadow-xl shadow-black/20 backdrop-blur">
@@ -14,7 +29,7 @@
 
           <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl outline-none focus:outline-none">
             Hi, I’m Julio Gonzalez Garcia.
-        </h1>
+          </h1>
 
           <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
             I build reliable web applications, automation tools, and data-driven systems
@@ -25,21 +40,6 @@
             My background includes full-stack development, SQL Server and Oracle environments,
             system analysis, and workflow automation across business-critical applications.
           </p>
-
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/about"
-               class="rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400">
-              About Me
-            </a>
-            <a href="/projects"
-               class="rounded-xl border border-slate-700 bg-slate-800 px-5 py-3 font-semibold text-slate-100 transition hover:bg-slate-700">
-              Projects
-            </a>
-            <a href="/resume"
-               class="rounded-xl border border-slate-700 bg-slate-800 px-5 py-3 font-semibold text-slate-100 transition hover:bg-slate-700">
-              Resume
-            </a>
-          </div>
         </div>
 
         <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
@@ -66,8 +66,16 @@
       </div>
     </section>
 
-    <!-- Stats -->
-    <section class="mt-10">
+    <!-- Skills -->
+    <section id="skills" class="reveal-section reveal-delay-1 mt-10 rounded-lg bg-slate-900/60 p-1">
+      <SkillsMarquee Skills="@SkillList" />
+    </section>
+
+    <section id="about" class="reveal-section reveal-delay-2 mt-10 rounded-lg border border-slate-800 p-1">
+      <About />
+    </section>
+
+    <section id="projects" class="reveal-section reveal-delay-3 mt-10 rounded-3xl border border-slate-800 bg-slate-900/60 p-8">
       <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         @foreach (var stat in ImpactStats)
         {
@@ -80,13 +88,7 @@
       </div>
     </section>
 
-    <!-- Skills -->
-    <section class="mt-12">
-      <SkillsMarquee Skills="SkillList" />
-    </section>
-
-    <!-- Featured Projects -->
-    <section class="mt-12">
+    <section id="projects-deatils" class="reveal-section reveal-delay-4 mt-10">
       <div class="flex items-end justify-between gap-4">
         <div>
           <h2 class="text-2xl font-bold tracking-tight text-white">Featured Projects</h2>
@@ -123,15 +125,14 @@
       </div>
     </section>
 
-    <!-- About preview -->
-    <section class="mt-12 rounded-3xl border border-slate-800 bg-slate-900/60 p-8">
-      <h2 class="text-2xl font-bold tracking-tight text-white">What I’m Building</h2>
-      <p class="mt-4 max-w-3xl leading-7 text-slate-300">
-        I’m building this portfolio to showcase personal projects, technical experiments, and examples
-        of how I approach software development. Much of my professional work has been internal or
-        business-focused, so this site is a place to present that experience in a more public way.
-      </p>
+    <section id="resume" class="reveal-section reveal-delay-5 mt-10 scroll-mt-24 rounded-3xl border border-slate-800 bg-slate-900/60 p-8">
+      <!-- Resume content -->
     </section>
+
+    <section id="history" class="reveal-section reveal-delay-6 mt-10 scroll-mt-24 rounded-3xl border border-slate-800 bg-slate-900/60 p-1">
+      <Timeline />
+    </section>
+
   </div>
 </div>
 
@@ -190,4 +191,17 @@
   private record ImpactStat(string Label, string Value, string Description);
   private record SkillGroup(string Title, string[] Skills);
   private record FeaturedProject(string Title, string Stack, string Description, string Status, string[] Tags);
+
+  //js animation
+  private bool _revealInitialized;
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    Console.WriteLine("Is this even called?");
+    if (firstRender && !_revealInitialized)
+    {
+      _revealInitialized = true;
+      Console.WriteLine("Calling initRevealSections");
+      await JS.InvokeVoidAsync("initRevealSections");
+    }
+  }
 }
