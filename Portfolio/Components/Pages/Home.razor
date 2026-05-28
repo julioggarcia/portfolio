@@ -196,11 +196,9 @@
   private bool _revealInitialized;
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
-    Console.WriteLine("Is this even called?");
     if (firstRender && !_revealInitialized)
     {
       _revealInitialized = true;
-      Console.WriteLine("Calling initRevealSections");
       await JS.InvokeVoidAsync("initRevealSections");
     }
   }

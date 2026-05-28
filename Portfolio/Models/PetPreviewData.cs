@@ -1,0 +1,32 @@
+public record PetPreviewData(string Name, List<string> Images)
+{
+    public static readonly List<PetPreviewData> Pets =
+    [
+        new("Miklo",
+        [
+            "images/pets/miklo-first-day.jpeg",
+            "images/pets/miklo-month-one-2.jpeg",
+            "images/pets/miklo-month-three.jpeg",
+            "images/pets/miklo-first-swim.jpeg",
+            "images/pets/miklo-seal-pose.jpeg",
+            "images/pets/miklo-akward-smile.jpeg",
+        ]),
+        new("Polo",
+        [
+            "images/pets/polo-sock-thief.jpeg",
+            "images/pets/polo-sleeping.jpeg",
+            "images/pets/polo-looking-back.jpeg",
+            "images/pets/polo-lying-down-tired.jpeg",
+            "images/pets/polo-lying-down-wet.jpg",
+        ]),
+        new("Capitan",
+        [
+            "images/pets/capi-first-week.jpeg",
+            "images/pets/capi-with-miklo.jpeg",
+            "images/pets/capi-miklo-at-park.jpeg",
+            "images/pets/capi-ball-in-mouth.jpeg",
+            "images/pets/capi-sofa-headrest.jpeg",
+            "images/pets/capi-ate-bee.jpeg",
+        ]),
+    ];
+}

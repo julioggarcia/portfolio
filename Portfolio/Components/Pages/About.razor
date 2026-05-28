@@ -1,6 +1,5 @@
 @page "/about"
 @rendermode InteractiveServer
-
 @inject ContactService ContactService
 
 <div class="min-h bg-slate-950 text-slate-100 rounded-[calc(theme(borderRadius.lg)-1px)]">
@@ -17,7 +16,7 @@
       <aside class="lg:sticky lg:top-8 mt-8">
         <div class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-xl shadow-black/20">
           <div class="flex flex-col lg:flex-row">
-             <!-- Photo -->
+            <!-- Photo -->
             <div class="shrink-0">
               <img src="/images/prof_pic.jpg" alt="Photo of Julio Gonzalez Garcia"
                    class="h-[33rem] w-[25rem] object-cover" />
@@ -28,8 +27,33 @@
 
               <div class="mt-6 space-y-6 text-sm leading-7 text-slate-300">
                 <p>
-                  After graduating Cal-Poly, I wanted to contribute to my community so I got a job with my old high school district. I enjoy making tools that staff can use. I have 3 dogs, Miklo, Capitan, and Polo. 3 very adorable dogs (I work to feed them). Hover over their names to get a slide-show of them! TODO - slideshow over dog name hover
+                  After graduating Cal-Poly, I wanted to contribute to my community so I got a job with my old high
+                  school district.
+                  I enjoy making tools that staff can use. I have 3 dogs,
+                  <span class="pet-name text-cyan-400 hover:text-cyan-300" @onmouseenter='() => ShowPetPreview("Miklo")'
+                        @onclick='() => PinPetPreview("Miklo")'>
+                    Miklo
+                  </span>
+                  ,
+                  <span class="pet-name text-cyan-400 hover:text-cyan-300"
+                        @onmouseenter='() => ShowPetPreview("Capitan")' @onclick='() => PinPetPreview("Capitan")'>
+                    Capitan
+                  </span>
+                  ,and
+                  <span class="pet-name text-cyan-400 hover:text-cyan-300" @onmouseenter='() => ShowPetPreview("Polo")'
+                        @onclick='() => PinPetPreview("Polo")'>
+                    Polo
+                  </span>
+                  . 3 very adorable dogs (I work to feed them). Hover over their names to get a slide-show of them!
                 </p>
+
+                <PetPreviewPopover 
+                  IsOpen="@_previewOpen" 
+                  CurrentPet="@_currentPet" 
+                  PopoverStyle="@_popoverStyle"
+                  OnClose="ClosePreview" 
+                />
+
                 <p>
                   I build reliable systems, web applications, and automation tools with a focus on maintainability and
                   practical impact.
@@ -73,9 +97,9 @@
                   {
                     <span class="select-none rounded-xl border border-slate-800 bg-slate-950/60 px-5 py-3 text-slate-400">
                       <span class="blur-md opacity-60 tracking-widest">
-                          hey!.shhhhhh-keepthissecret
+                        hey!.shhhhhh-keepthissecret
                       </span>
-                  </span>
+                    </span>
                   }
                 </div>
 
@@ -115,6 +139,34 @@
   private Task RevealEmailAsync()
   {
     Email = ContactService.GetEmail();
+    return Task.CompletedTask;
+  }
+}
+
+@code {
+  private bool _previewOpen;
+  private bool _pinned;
+  private PetPreviewData? _currentPet;
+  private string _popoverStyle = "top: 0px; left: 0px;";
+
+  private void ShowPetPreview(string name)
+  {
+    if (_pinned) return;
+    _currentPet = PetPreviewData.Pets.FirstOrDefault(d => d.Name == name);
+    _previewOpen = _currentPet is not null;
+  }
+
+  private void PinPetPreview(string name)
+  {
+    _currentPet = PetPreviewData.Pets.FirstOrDefault(d => d.Name == name);
+    _previewOpen = _currentPet is not null;
+    _pinned = true;
+  }
+
+  private Task ClosePreview()
+  {
+    _previewOpen = false;
+    _pinned = false;
     return Task.CompletedTask;
   }
 }
