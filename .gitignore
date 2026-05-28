@@ -21,3 +21,6 @@ publish/
 
 # Tailwind / Node
 node_modules/
+
+# Images - NOTE will remove near prod
+Portfolio/wwwroot/images/*
