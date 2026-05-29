@@ -2,75 +2,50 @@
 
 @if (IsOpen && CurrentPet is not null)
 {
-    <div class="dog-preview-popover" style="@PopoverStyle"
-         @onmouseenter="HandleMouseEnter"
-         @onmouseleave="HandleMouseLeave">
-        <div class="flex items-start justify-between gap-3">
-            <div>
-                <h3 class="text-sm font-semibold text-white">@CurrentPet.Name</h3>
-                <p class="text-xs text-slate-400">@CurrentPet.Bio</p>
-            </div>
-
-            <button type="button"
-                    class="rounded-full border border-slate-700 px-2 py-1 text-xs text-slate-300 transition hover:border-slate-500 hover:text-white"
-                    @onclick="Close">
-                ✕
-            </button>
-        </div>
-
-        <div class="mt-4 relative">
-            <img src="@CurrentSlide"
-                 alt="@CurrentPet.Name"
-                 class="h-64 w-96 rounded-2xl object-cover" />
-
-            <button type="button"
-                    class="slide-arrow slide-arrow-left"
-                    @onclick="PreviousSlide"
-                    aria-label="Previous image">
-            </button>
-
-            <button type="button"
-                    class="slide-arrow slide-arrow-right"
-                    @onclick="NextSlide"
-                    aria-label="Next image">
-            </button>
-        </div>
-
-        <div class="mt-3 flex items-center justify-center gap-2">
-            @for (var i = 0; i < 3; i++)
-            {
-                <span class="slide-dot @(i == ActiveDot ? "active" : "")"></span>
-            }
-        </div>
+  <div class="pet-preview-popover" style="@PopoverStyle" @ref="popoverRef" @onmouseenter="HandleMouseEnter"
+       @onmouseleave="HandleMouseLeave">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="text-sm font-semibold text-white">@CurrentPet.Name</h3>
+        <p class="text-xs text-slate-400">@CurrentPet.Bio</p>
+      </div>
     </div>
+
+    <div class="mt-4 relative">
+      <img src="@CurrentSlide" alt="@CurrentPet.Name" class="h-64 w-96 rounded-2xl object-cover" />
+    </div>
+
+
+  </div>
 }
 
 @code {
-    [Parameter] public bool IsOpen { get; set; }
-    [Parameter] public PetPreviewData? CurrentPet { get; set; }
-    [Parameter] public string PopoverStyle { get; set; } = "";
-    [Parameter] public EventCallback OnClose { get; set; }
+  [Parameter] public bool IsOpen { get; set; }
+  [Parameter] public PetPreviewData? CurrentPet { get; set; }
+  [Parameter] public string PopoverStyle { get; set; } = "";
+  [Parameter] public EventCallback OnClose { get; set; }
 
-    private int SlideIndex { get; set; }
-    private int ActiveDot => SlideIndex % 3;
+  private ElementReference popoverRef;
+  private int SlideIndex { get; set; }
+  private int ActiveDot => SlideIndex % 3;
 
-    private string CurrentSlide =>
-        CurrentPet?.Images[SlideIndex % CurrentPet.Images.Count] ?? "";
+  private string CurrentSlide =>
+      CurrentPet?.Images[SlideIndex % CurrentPet.Images.Count] ?? "";
 
-    private void NextSlide()
-    {
-        if (CurrentPet is null || CurrentPet.Images.Count == 0) return;
-        SlideIndex = (SlideIndex + 1) % CurrentPet.Images.Count;
-    }
+  private void NextSlide()
+  {
+    if (CurrentPet is null || CurrentPet.Images.Count == 0) return;
+    SlideIndex = (SlideIndex + 1) % CurrentPet.Images.Count;
+  }
 
-    private void PreviousSlide()
-    {
-        if (CurrentPet is null || CurrentPet.Images.Count == 0) return;
-        SlideIndex = (SlideIndex - 1 + CurrentPet.Images.Count) % CurrentPet.Images.Count;
-    }
+  private void PreviousSlide()
+  {
+    if (CurrentPet is null || CurrentPet.Images.Count == 0) return;
+    SlideIndex = (SlideIndex - 1 + CurrentPet.Images.Count) % CurrentPet.Images.Count;
+  }
 
-    private Task Close() => OnClose.InvokeAsync();
+  private Task Close() => OnClose.InvokeAsync();
 
-    private Task HandleMouseEnter() => Task.CompletedTask;
-    private Task HandleMouseLeave() => Task.CompletedTask;
+  private Task HandleMouseEnter() => Task.CompletedTask;
+  private Task HandleMouseLeave() => Task.CompletedTask;
 }

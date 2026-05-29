@@ -30,29 +30,28 @@
                   After graduating Cal-Poly, I wanted to contribute to my community so I got a job with my old high
                   school district.
                   I enjoy making tools that staff can use. I have 3 dogs,
-                  <span class="pet-name text-cyan-400 hover:text-cyan-300" @onmouseenter='() => ShowPetPreview("Miklo")'
-                        @onclick='() => PinPetPreview("Miklo")'>
+                  <span class="pet-name text-cyan-400 hover:text-cyan-300"
+                        @onmouseenter='async () => await onPetPreview.InvokeAsync("Miklo")'
+                        @onmouseleave='async () => await onPetPreviewHide.InvokeAsync()'
+                        @onmousemove='async e => await onPetPreviewMove.InvokeAsync(e)'>
                     Miklo
                   </span>
                   ,
                   <span class="pet-name text-cyan-400 hover:text-cyan-300"
-                        @onmouseenter='() => ShowPetPreview("Capitan")' @onclick='() => PinPetPreview("Capitan")'>
+                        @onmouseenter='async () => await onPetPreview.InvokeAsync("Capitan")'
+                        @onmouseleave='async () => await onPetPreviewHide.InvokeAsync()'
+                        @onmousemove='async e => await onPetPreviewMove.InvokeAsync(e)'>
                     Capitan
                   </span>
-                  ,and
-                  <span class="pet-name text-cyan-400 hover:text-cyan-300" @onmouseenter='() => ShowPetPreview("Polo")'
-                        @onclick='() => PinPetPreview("Polo")'>
+                  , and
+                  <span class="pet-name text-cyan-400 hover:text-cyan-300"
+                        @onmouseenter='async () => await onPetPreview.InvokeAsync("Polo")'
+                        @onmouseleave='async () => await onPetPreviewHide.InvokeAsync()'
+                        @onmousemove='async e => await onPetPreviewMove.InvokeAsync(e)'>
                     Polo
                   </span>
                   . 3 very adorable dogs (I work to feed them). Hover over their names to get a slide-show of them!
                 </p>
-
-                <PetPreviewPopover 
-                  IsOpen="@_previewOpen" 
-                  CurrentPet="@_currentPet" 
-                  PopoverStyle="@_popoverStyle"
-                  OnClose="ClosePreview" 
-                />
 
                 <p>
                   I build reliable systems, web applications, and automation tools with a focus on maintainability and
@@ -144,29 +143,8 @@
 }
 
 @code {
-  private bool _previewOpen;
-  private bool _pinned;
-  private PetPreviewData? _currentPet;
-  private string _popoverStyle = "top: 0px; left: 0px;";
+  [Parameter] public EventCallback<string> onPetPreview { get; set; }
+  [Parameter] public EventCallback<MouseEventArgs> onPetPreviewMove { get; set; }
+  [Parameter] public EventCallback onPetPreviewHide { get; set; }
 
-  private void ShowPetPreview(string name)
-  {
-    if (_pinned) return;
-    _currentPet = PetPreviewData.Pets.FirstOrDefault(d => d.Name == name);
-    _previewOpen = _currentPet is not null;
-  }
-
-  private void PinPetPreview(string name)
-  {
-    _currentPet = PetPreviewData.Pets.FirstOrDefault(d => d.Name == name);
-    _previewOpen = _currentPet is not null;
-    _pinned = true;
-  }
-
-  private Task ClosePreview()
-  {
-    _previewOpen = false;
-    _pinned = false;
-    return Task.CompletedTask;
-  }
 }
