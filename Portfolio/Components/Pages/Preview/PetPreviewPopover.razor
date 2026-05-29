@@ -2,7 +2,7 @@
 
 @if (IsOpen && CurrentPet is not null)
 {
-  <div class="pet-preview-popover" style="@PopoverStyle" @ref="popoverRef" @onmouseenter="HandleMouseEnter"
+  <div class="pet-preview-popover" style="@PopoverStyle" @onmouseenter="HandleMouseEnter"
        @onmouseleave="HandleMouseLeave">
     <div class="flex items-start justify-between gap-3">
       <div>
@@ -15,6 +15,12 @@
       <img src="@CurrentSlide" alt="@CurrentPet.Name" class="h-64 w-96 rounded-2xl object-cover" />
     </div>
 
+    <div class="flex mt-2 gap-2 justify-center">
+      @for (var i = 0; i < CurrentPet.Images.Count; i++)
+      {
+        <span class="inline-block w-2 h-2 rounded-full @(i == SlideIndex ? "bg-cyan-400" : "bg-slate-600")"></span>
+      }
+    </div>
 
   </div>
 }
@@ -25,26 +31,51 @@
   [Parameter] public string PopoverStyle { get; set; } = "";
   [Parameter] public EventCallback OnClose { get; set; }
 
-  private ElementReference popoverRef;
   private int SlideIndex { get; set; }
-  private int ActiveDot => SlideIndex % 3;
+  private System.Threading.Timer? _timer;
 
   private string CurrentSlide =>
       CurrentPet?.Images[SlideIndex % CurrentPet.Images.Count] ?? "";
 
-  private void NextSlide()
-  {
-    if (CurrentPet is null || CurrentPet.Images.Count == 0) return;
-    SlideIndex = (SlideIndex + 1) % CurrentPet.Images.Count;
-  }
-
-  private void PreviousSlide()
-  {
-    if (CurrentPet is null || CurrentPet.Images.Count == 0) return;
-    SlideIndex = (SlideIndex - 1 + CurrentPet.Images.Count) % CurrentPet.Images.Count;
-  }
-
   private Task Close() => OnClose.InvokeAsync();
+
+  //handles the slide show logic
+  protected override void OnParametersSet()
+  {
+    if (!IsOpen || CurrentPet is null) {
+      SlideIndex = 0;
+      StopSlideShow();
+    } else {
+      SlideIndex = 0;
+      StartSlideShow();
+    }
+  }
+
+  private void StartSlideShow() {
+    StopSlideShow(); //ensures single timer
+    if (CurrentPet is null || CurrentPet.Images.Count <= 1)
+      return;
+    
+    _timer = new System.Threading.Timer(_ => {
+      InvokeAsync(() => {
+        if (!IsOpen || CurrentPet is null) {
+          StopSlideShow(); 
+          return;
+        }
+        SlideIndex = (SlideIndex + 1) % CurrentPet.Images.Count;
+        StateHasChanged();
+      });
+    }, null, 2000, 2000); //start after 2s, repeat every 2s
+  }
+
+  private void StopSlideShow() {
+    _timer?.Dispose();
+    _timer = null;
+  }
+
+  public void Dispose() {
+    StopSlideShow();
+  }
 
   private Task HandleMouseEnter() => Task.CompletedTask;
   private Task HandleMouseLeave() => Task.CompletedTask;
