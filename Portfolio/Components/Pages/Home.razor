@@ -3,12 +3,12 @@
 @inject IJSRuntime JS
 @rendermode InteractiveServer
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Julio Garcia</PageTitle>
 
 <div class="min-h-screen bg-slate-950 text-slate-100">
   <!-- Top nav -->
-  <div class="mx-auto max-w-7xl px-6 pt-6 lg:px-8">
-    <div class="flex justify-start">
+  <div class="flex pt-6">
+    <div class="flex justify-start ml-auto text-sm px-2">
       <ol class="flex flex-wrap gap-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
         <li><a href="#skills" class="transition hover:text-cyan-300">Skills</a></li>
         <li><a href="#about" class="transition hover:text-cyan-300">About</a></li>
@@ -20,15 +20,15 @@
   </div>
   <div class="mx-auto max-w-7xl px-6 py-10 lg:px-8">
     <!-- Hero -->
-    <section class="rounded-3xl border border-slate-800 bg-slate-900/60 p-8 shadow-xl shadow-black/20 backdrop-blur">
-      <div class="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+    <section class="min-h-screen p-8 flex items-center">
+      <div class="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center w-full">
         <div>
-          <p class="text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-            Full-Stack Systems & Data Engineer
+          <p class="text-sm font-medium tracking-[0.3em] text-cyan-400">
+            Hi, my name is
           </p>
 
           <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl outline-none focus:outline-none">
-            Hi, I’m Julio Gonzalez Garcia.
+            Julio Gonzalez Garcia
           </h1>
 
           <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
@@ -41,29 +41,11 @@
             system analysis, and workflow automation across business-critical applications.
           </p>
         </div>
-
-        <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
-          <div class="flex items-center justify-between">
-            <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">
-              Quick Profile
-            </h2>
-            <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
-              Available for opportunities
-            </span>
-          </div>
-
-          <dl class="mt-6 space-y-4">
-            @foreach (var item in ProfileStats)
-            {
-              <div
-                class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4 last:border-b-0 last:pb-0">
-                <dt class="text-sm text-slate-400">@item.Label</dt>
-                <dd class="text-right text-sm font-semibold text-white">@item.Value</dd>
-              </div>
-            }
-          </dl>
-        </div>
       </div>
+    </section>
+
+    <section id="about" class="reveal-section reveal-delay-2 mt-10  p-1">
+      <About OnPetPreview="@ShowPetPreview" OnPetPreviewMove="@OnPetMouseMove" OnPetPreviewHide="@HidePetPreview" />
     </section>
 
     <!-- Skills -->
@@ -71,11 +53,9 @@
       <SkillsMarquee Skills="@SkillList" />
     </section>
 
-    <section id="about" class="reveal-section reveal-delay-2 mt-10 rounded-lg border border-slate-800 p-1">
-      <About 
-        OnPetPreview="@ShowPetPreview" 
-        OnPetPreviewMove="@OnPetMouseMove" 
-        OnPetPreviewHide="@HidePetPreview"/>
+    <section id="history"
+             class="reveal-section reveal-delay-6 mt-10 scroll-mt-24 rounded-3xl border border-slate-800 bg-slate-900/60 p-1">
+      <Timeline />
     </section>
 
     <section id="projects"
@@ -132,11 +112,6 @@
     <section id="resume"
              class="reveal-section reveal-delay-5 mt-10 scroll-mt-24 rounded-3xl border border-slate-800 bg-slate-900/60 p-8">
       <!-- Resume content -->
-    </section>
-
-    <section id="history"
-             class="reveal-section reveal-delay-6 mt-10 scroll-mt-24 rounded-3xl border border-slate-800 bg-slate-900/60 p-1">
-      <Timeline />
     </section>
 
   </div>
@@ -218,7 +193,7 @@
   private bool _pinned;
   private PetPreviewData? _currentPet;
   private string _popoverStyle = "top: 0px; left: 0px;";
-    private class DomRect
+  private class DomRect
   {
     public double width { get; set; }
     public double height { get; set; }

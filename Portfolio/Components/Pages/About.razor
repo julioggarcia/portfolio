@@ -2,7 +2,7 @@
 @rendermode InteractiveServer
 @inject ContactService ContactService
 
-<div class="min-h bg-slate-950 text-slate-100 rounded-[calc(theme(borderRadius.lg)-1px)]">
+<div class="min-h text-slate-100 rounded-[calc(theme(borderRadius.lg)-1px)]">
   <div class="mx-auto py-4 px-4">
     <section class="grid gap-10 lg:items-start">
       <div>
@@ -14,7 +14,7 @@
     <section>
       <!-- Right column -->
       <aside class="lg:sticky lg:top-8 mt-8">
-        <div class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-xl shadow-black/20">
+        <div class="overflow-hidden">
           <div class="flex flex-col lg:flex-row">
             <!-- Photo -->
             <div class="shrink-0">
@@ -22,35 +22,42 @@
                    class="h-[33rem] w-[25rem] object-cover" />
             </div>
             <!-- Details -->
-            <div class="flex-1 p-4">
-              <p class="mt-2 text-sm text-slate-400">Full-Stack Systems & Data Engineer</p>
+            <div class="flex-1 p-4 text-md">
+              <p class="mt-2 text-slate-400">Full-Stack Systems & Data Engineer</p>
 
-              <div class="mt-6 space-y-6 text-sm leading-7 text-slate-300">
+              <div class="mt-6 space-y-6 leading-7 text-slate-300">
                 <p>
-                  After graduating Cal-Poly, I wanted to contribute to my community so I got a job with my old high
-                  school district.
-                  I enjoy making tools that staff can use. I have 3 dogs,
+                  Hello! I have 3 dogs,
                   <span class="pet-name text-cyan-400 hover:text-cyan-300"
                         @onmouseenter='async () => await onPetPreview.InvokeAsync("Miklo")'
                         @onmouseleave='async () => await onPetPreviewHide.InvokeAsync()'
                         @onmousemove='async e => await onPetPreviewMove.InvokeAsync(e)'>
-                    Miklo
+                    <strong>Miklo</strong>
                   </span>
                   ,
                   <span class="pet-name text-cyan-400 hover:text-cyan-300"
                         @onmouseenter='async () => await onPetPreview.InvokeAsync("Capitan")'
                         @onmouseleave='async () => await onPetPreviewHide.InvokeAsync()'
                         @onmousemove='async e => await onPetPreviewMove.InvokeAsync(e)'>
-                    Capitan
+                    <strong>Capitan</strong>
                   </span>
                   , and
                   <span class="pet-name text-cyan-400 hover:text-cyan-300"
                         @onmouseenter='async () => await onPetPreview.InvokeAsync("Polo")'
                         @onmouseleave='async () => await onPetPreviewHide.InvokeAsync()'
                         @onmousemove='async e => await onPetPreviewMove.InvokeAsync(e)'>
-                    Polo
+                    <string>Polo</string>
                   </span>
-                  . 3 very adorable dogs (I work to feed them). Hover over their names to get a slide-show of them!
+                  . 3 very adorable dogs 
+                  <i>
+                    (I work to feed them)
+                  </i>
+                  <strong>
+                    . Hover over their names to get a slide-show of them!
+                  </strong>
+                  After graduating Cal-Poly, I wanted to contribute to my community so I got a job with my old high
+                  school district.
+                  I enjoy making tools that staff can use.
                 </p>
 
                 <p>
