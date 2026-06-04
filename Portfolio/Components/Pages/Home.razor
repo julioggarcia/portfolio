@@ -55,7 +55,7 @@
       <Timeline />
     </section>
 
-    <section id="projects" class="reveal-section reveal-delay-4 mt-10">
+    <section id="projects" class="reveal-section reveal-delay-2 scroll-mt-8 p-1">
       <div class="flex items-end justify-between gap-4">
         <div>
           <p class="text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">Projects </p>
@@ -92,8 +92,7 @@
       </div>
     </section>
 
-    <section id="resume"
-             class="reveal-section reveal-delay-5 mt-10 scroll-mt-8">
+    <section id="resume" class="reveal-section reveal-delay-2 scroll-mt-8 p-1">
       <!-- Resume content -->
       <Resume></Resume>
     </section>
@@ -171,6 +170,13 @@
 
   private readonly List<FeaturedProject> FeaturedProjects =
   [
+    new(
+      Title: "Workload Equalizer",
+      Stack: "Next.js / WebSockets / SQL Server",
+      Description: "Designed and developed an internal workload equalizer application that enables staff to assign incoming applications more efficiently by identifying the next worker in rotation, ensuring balanced workload distribution across the team",
+      Status: "Completed",
+      ["WebSockets", "Realtime", "Internal Tool"]
+    ),
     new(
         "Real-Time System Status Dashboard",
         "Next.js / SSE / SQL Server",
